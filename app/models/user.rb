@@ -13,12 +13,12 @@ class User < ApplicationRecord
 # 自分がフォローしたりアンフォローしたりするための記述
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
 # フォロー一覧を表示するための記述
-  has_many :followings, through: :relationships, source: :follower
+  has_many :followings, through: :relationships, source: :followed
 
 #
   has_many :reverse_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
 # フォロワー一覧を表示するための記述
-  has_many :followers, through: :reverse_relationships, source: :followed
+  has_many :followers, through: :reverse_relationships, source: :follower
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
